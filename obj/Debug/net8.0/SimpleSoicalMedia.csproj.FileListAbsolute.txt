@@ -1,0 +1,15 @@
+/home/evanjducas/C#Projects/SimpleSoicalMedia/obj/Debug/net8.0/SimpleSoicalMedia.GeneratedMSBuildEditorConfig.editorconfig
+/home/evanjducas/C#Projects/SimpleSoicalMedia/obj/Debug/net8.0/SimpleSoicalMedia.AssemblyInfoInputs.cache
+/home/evanjducas/C#Projects/SimpleSoicalMedia/obj/Debug/net8.0/SimpleSoicalMedia.AssemblyInfo.cs
+/home/evanjducas/C#Projects/SimpleSoicalMedia/obj/Debug/net8.0/SimpleSoicalMedia.csproj.CoreCompileInputs.cache
+/home/evanjducas/C#Projects/SimpleSoicalMedia/obj/Debug/net8.0/SimpleSoicalMedia.sourcelink.json
+/home/evanjducas/C#Projects/SimpleSoicalMedia/bin/Debug/net8.0/SimpleSoicalMedia
+/home/evanjducas/C#Projects/SimpleSoicalMedia/bin/Debug/net8.0/SimpleSoicalMedia.deps.json
+/home/evanjducas/C#Projects/SimpleSoicalMedia/bin/Debug/net8.0/SimpleSoicalMedia.runtimeconfig.json
+/home/evanjducas/C#Projects/SimpleSoicalMedia/bin/Debug/net8.0/SimpleSoicalMedia.dll
+/home/evanjducas/C#Projects/SimpleSoicalMedia/bin/Debug/net8.0/SimpleSoicalMedia.pdb
+/home/evanjducas/C#Projects/SimpleSoicalMedia/obj/Debug/net8.0/SimpleSoicalMedia.dll
+/home/evanjducas/C#Projects/SimpleSoicalMedia/obj/Debug/net8.0/refint/SimpleSoicalMedia.dll
+/home/evanjducas/C#Projects/SimpleSoicalMedia/obj/Debug/net8.0/SimpleSoicalMedia.pdb
+/home/evanjducas/C#Projects/SimpleSoicalMedia/obj/Debug/net8.0/SimpleSoicalMedia.genruntimeconfig.cache
+/home/evanjducas/C#Projects/SimpleSoicalMedia/obj/Debug/net8.0/ref/SimpleSoicalMedia.dll
