@@ -5,11 +5,12 @@ class Program
 {
     public static UserInputTextHandler inputHandler = new UserInputTextHandler();
     public static  AccountHandle accountHandle = new AccountHandle(); 
-    
+    public static FileWriter fileWriter = new FileWriter();
     public static List<string> yesNo = new List<string> { "y", "n" }; 
 
     public static void Main(string[] args)
     {
+        fileWriter.SetUpSQLDataBase();
         Console.WriteLine("Welcome to Evan's Simple Social Media");
         Console.WriteLine("Have you already made an account? y or n");
 
