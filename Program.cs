@@ -8,8 +8,6 @@ class Program
     public static  AccountHandle accountHandle = new AccountHandle(); 
     public static FileWriter fileWriter = new FileWriter();
     public static List<string> yesNo = new List<string> { "y", "n" }; 
-
-
     public static void Main(string[] args)
     {
         if (args.Length == 1)
@@ -17,9 +15,12 @@ class Program
             FileWriter.DeleteAllUsernames();
             Console.WriteLine("deleted all usernames");
         }
-        //
+    
         //FileWriter.ListAllData();
         fileWriter.SetUpSQLDataBase();
+
+        inputHandler.CannotBeNull();
+        
         Console.WriteLine("Welcome to Evan's Simple Social Media");
         Console.WriteLine("Have you already made an account? y or n");
         string inputPassword;
@@ -34,11 +35,11 @@ class Program
         else if (input == "y")
         {
             Console.WriteLine("What Is Your Username?");
-            input = Console.ReadLine();
+            input = inputHandler.CannotBeNull();
             Console.WriteLine("What is your password?");
-            inputPassword = Console.ReadLine();
+            inputPassword = inputHandler.CannotBeNull();
             Console.WriteLine("What is your email?");
-            inputEmail = Console.ReadLine();
+            inputEmail = inputHandler.CannotBeNull();
             if (fileWriter.LogIntAcountDataBase(input, inputPassword,  inputEmail))
             {
                 Console.WriteLine("Succesful!");
@@ -52,6 +53,11 @@ class Program
 
 
 
+
+
+
     }
+
+    
 }
 
