@@ -1,26 +1,25 @@
+
 public class AccountHandle
 {
     private string inputName;
     private string inputEmail;
     private string inputPassword;
 
-
+    private static UserInputTextHandler userInputTextHandler;
     private static FileWriter fileWriter = new FileWriter();
 
-    public void CreateAccount()
+    public string CreateAccount()
     {
         inputName = FileWriter.DoesUsernameExist();
         Console.WriteLine("Please Enter a password");
-        inputPassword = Console.ReadLine();
+        inputPassword = userInputTextHandler.CannotBeNull();
         Console.WriteLine("Please Enter Your Email.");
-        inputEmail = Console.ReadLine();
+        inputEmail = userInputTextHandler.CannotBeNull();
         FileWriter.AddUser(inputName, inputEmail, inputPassword);
-
+        return inputName;
     }
     public void LogIntAcount()
     {
         
     }
-
-
 }
