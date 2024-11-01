@@ -76,6 +76,69 @@ public class FileWriter
             }
         }
     }
+    public static void DeleteAllUsernames()
+{
+    string connectionString = "Data Source=local_database.db;Version=3;";
+    using (SQLiteConnection connection = new SQLiteConnection(connectionString))
+    {
+        connection.Open();
+
+        string deleteQuery = "DELETE FROM Users";
+
+        using (SQLiteCommand command = new SQLiteCommand(deleteQuery, connection))
+        {
+            command.ExecuteNonQuery();
+            Console.WriteLine("All usernames, passwords, and emails deleted successfully.");
+        }
+    }
+}
+public static void ListAllData()
+{
+    string connectionString = "Data Source=local_database.db;Version=3;";
+    using (SQLiteConnection connection = new SQLiteConnection(connectionString))
+    {
+        connection.Open();
+
+        string selectQuery = "SELECT * FROM Users";
+        using (SQLiteCommand command = new SQLiteCommand(selectQuery, connection))
+        {
+            using (SQLiteDataReader reader = command.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+                    Console.WriteLine("ID:   " + reader["Id"]);
+                    Console.WriteLine("Username: " + reader["Username"]);
+                    Console.WriteLine("Password: " + reader["Password"]);
+                    Console.WriteLine("Email: " + reader["Email"]);
+                    Console.WriteLine();   
+
+                }
+            }
+        }
+    }
+}
+    public bool LogIntAcountDataBase(string UserName, string Password, string email)
+    {   
+        string connectionString = "Data Source=local_database.db;Version=3;";
+    using (SQLiteConnection connection = new SQLiteConnection(connectionString))
+    {
+        connection.Open();
+
+        string selectQuery = "SELECT * FROM Users WHERE Username = @username AND Password = @password LIMIT 1";
+        using (SQLiteCommand command = new SQLiteCommand(selectQuery, connection))
+        {
+            command.Parameters.AddWithValue("@username", UserName);
+            command.Parameters.AddWithValue("@password",   
+ Password);
+
+            using (SQLiteDataReader reader = command.ExecuteReader())   
+
+            {
+                return reader.HasRows;
+            }
+        }
+    }
+    }
 }
 
 

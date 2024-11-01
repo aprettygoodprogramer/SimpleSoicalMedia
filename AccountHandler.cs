@@ -9,14 +9,17 @@ public class AccountHandle
 
     public void CreateAccount()
     {
-        FileWriter.DoesUsernameExist();
-        //fileWriter.WriteToUserDataBase(input);
+        inputName = FileWriter.DoesUsernameExist();
         Console.WriteLine("Please Enter a password");
         inputPassword = Console.ReadLine();
-        //fileWriter.WriteToUserDataBase(input);
-
+        Console.WriteLine("Please Enter Your Email.");
+        inputEmail = Console.ReadLine();
         FileWriter.AddUser(inputName, inputEmail, inputPassword);
 
+    }
+    public void LogIntAcount()
+    {
+        
     }
 
 
