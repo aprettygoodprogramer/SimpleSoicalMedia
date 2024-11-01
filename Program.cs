@@ -18,8 +18,6 @@ class Program
     
         //FileWriter.ListAllData();
         fileWriter.SetUpSQLDataBase();
-
-        inputHandler.CannotBeNull();
         
         Console.WriteLine("Welcome to Evan's Simple Social Media");
         Console.WriteLine("Have you already made an account? y or n");

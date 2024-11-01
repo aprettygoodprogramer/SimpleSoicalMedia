@@ -2,10 +2,9 @@
 public class AccountHandle
 {
     private string inputName;
-    private string inputEmail;
-    private string inputPassword;
-
-    private static UserInputTextHandler userInputTextHandler;
+    private string inputEmail = null;
+    private string inputPassword = null;
+    private static UserInputTextHandler userInputTextHandler = new UserInputTextHandler(); 
     private static FileWriter fileWriter = new FileWriter();
 
     public string CreateAccount()

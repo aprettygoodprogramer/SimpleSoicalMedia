@@ -23,16 +23,16 @@ public class UserInputTextHandler
     }
     public string CannotBeNull()
     {
-        string input = null;
-        while(input == null || input.Length == 0 || input == "")
+        string input;
+        do
         {
-        input = Console.ReadLine();
-        
-        if (input == null || input.Length == 0 || input == "")
-        {
-            Console.WriteLine("Please Do Not Enter nothing");
-        }
-        }
+            input = Console.ReadLine();
+            if (string.IsNullOrEmpty(input))
+            {
+                Console.WriteLine("Please Do Not Enter nothing");
+            }
+        } while (string.IsNullOrEmpty(input));
+
         return input;
     }
     
