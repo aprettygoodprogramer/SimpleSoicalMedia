@@ -18,8 +18,4 @@ public class AccountHandle
         
         return inputName;
     }
-    public void LogIntAcount()
-    {
-        
-    }
 }

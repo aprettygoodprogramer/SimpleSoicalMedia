@@ -7,7 +7,8 @@ class Program
     public static UserInputTextHandler inputHandler = new UserInputTextHandler();
     public static  AccountHandle accountHandle = new AccountHandle(); 
     public static FileWriter fileWriter = new FileWriter();
-    public static List<string> yesNo = new List<string> { "y", "n" }; 
+    public static List<string> yesNo = new List<string> { "y", "n"}; 
+    public static List<string> LookOrCreate = new List<string> { "C", "L" }; 
         static string inputPassword;
        static string inputEmail;
         static string CurrentUsername; 
@@ -37,7 +38,14 @@ class Program
             attemptToLogIn();
 
         }
-        
+        Console.WriteLine("Would You Like to Create A post or Look at posts? Type C for create and L for look");
+        input = inputHandler.caseSensitiveInput(LookOrCreate); 
+        if (input == "L")
+        {
+            
+        }
+
+
     }
     
     public static void attemptToLogIn()

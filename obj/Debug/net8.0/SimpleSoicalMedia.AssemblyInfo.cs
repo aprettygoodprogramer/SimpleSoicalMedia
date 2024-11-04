@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("SimpleSoicalMedia")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+711dcee52e55cc5954152bc141d240a5e17ecdc7")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+100658cff1c36ba249b8c469172559c3118f57d8")]
 [assembly: System.Reflection.AssemblyProductAttribute("SimpleSoicalMedia")]
 [assembly: System.Reflection.AssemblyTitleAttribute("SimpleSoicalMedia")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
