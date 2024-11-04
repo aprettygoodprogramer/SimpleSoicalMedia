@@ -8,6 +8,10 @@ class Program
     public static  AccountHandle accountHandle = new AccountHandle(); 
     public static FileWriter fileWriter = new FileWriter();
     public static List<string> yesNo = new List<string> { "y", "n" }; 
+        static string inputPassword;
+       static string inputEmail;
+        static string CurrentUsername; 
+        static string input="";
     public static void Main(string[] args)
     {
         if (args.Length == 1)
@@ -21,10 +25,8 @@ class Program
         
         Console.WriteLine("Welcome to Evan's Simple Social Media");
         Console.WriteLine("Have you already made an account? y or n");
-        string inputPassword;
-        string inputEmail;
-        string CurrentUsername; 
-        string input = inputHandler.caseSensitiveInput(yesNo); 
+
+        input = inputHandler.caseSensitiveInput(yesNo); 
         if (input == "n")
         {
             accountHandle.CreateAccount();
@@ -32,7 +34,14 @@ class Program
         }
         else if (input == "y")
         {
-            Console.WriteLine("What Is Your Username?");
+            attemptToLogIn();
+
+        }
+    }
+    
+    public static void attemptToLogIn()
+    {
+        Console.WriteLine("What Is Your Username?");
             input = inputHandler.CannotBeNull();
             Console.WriteLine("What is your password?");
             inputPassword = inputHandler.CannotBeNull();
@@ -46,16 +55,12 @@ class Program
             else
             {
                 Console.WriteLine("Failed");
+                Console.WriteLine("Please Try Again To Log In!");
+                attemptToLogIn();
             }
         }
 
-
-
-
-
-
     }
 
-    
-}
+
 
