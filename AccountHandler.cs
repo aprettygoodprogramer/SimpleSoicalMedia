@@ -17,8 +17,4 @@ public class AccountHandle
         FileWriter.AddUser(inputName, inputEmail, inputPassword);
         return inputName;
     }
-    public void LogIntAcount()
-    {
-        
-    }
 }

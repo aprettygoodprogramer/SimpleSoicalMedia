@@ -2,10 +2,12 @@ using System.IO;
 
 using System.Data.SQLite;
 using Microsoft.VisualBasic;
+using System.Configuration;
 
 public class FileWriter
 {
 
+    public static Random rnd = new Random();
 
     public static UserInputTextHandler userInputTextHandler = new UserInputTextHandler(); 
     public void SetUpSQLDataBase()
@@ -27,7 +29,27 @@ public class FileWriter
                 }
                     Console.WriteLine("succres");
             }
+            string connectionString1 = "Data Source=local_database.db;Version=3;";
+
+    using (SQLiteConnection connection1 = new SQLiteConnection(connectionString1))
+    {
+        connection1.Open();
+
+        string createTableQuery = @"CREATE TABLE IF NOT EXISTS Posts (
+                                        PostId INTEGER PRIMARY KEY AUTOINCREMENT,
+                                        UserId INTEGER,
+                                        Content TEXT NOT NULL,
+                                        Timestamp DATETIME DEFAULT CURRENT_TIMESTAMP,
+                                        FOREIGN KEY (UserId) REFERENCES Users(Id))";
+
+        using (SQLiteCommand command = new SQLiteCommand(createTableQuery, connection1))
+        {
+            command.ExecuteNonQuery();
         }
+        Console.WriteLine("Posts table set up successfully.");
+
+        }
+    }
     public static void AddUser(string username, string password, string email)
         {
             string connectionString = "Data Source=local_database.db;Version=3;";
@@ -107,11 +129,11 @@ public static void ListAllData()
             {
                 while (reader.Read())
                 {
-                    Console.WriteLine("ID:   " + reader["Id"]);
+                    Console.WriteLine("ID: " + reader["Id"]);
                     Console.WriteLine("Username: " + reader["Username"]);
                     Console.WriteLine("Password: " + reader["Password"]);
                     Console.WriteLine("Email: " + reader["Email"]);
-                    Console.WriteLine();   
+                    Console.WriteLine(); 
 
                 }
             }
@@ -129,8 +151,7 @@ public static void ListAllData()
         using (SQLiteCommand command = new SQLiteCommand(selectQuery, connection))
         {
             command.Parameters.AddWithValue("@username", UserName);
-            command.Parameters.AddWithValue("@password",   
- Password);
+            command.Parameters.AddWithValue("@password", Password);
 
             using (SQLiteDataReader reader = command.ExecuteReader())   
 
@@ -140,6 +161,31 @@ public static void ListAllData()
         }
     }
     }
+    public static void CreatePost(int userId, string content)
+{
+    string connectionString = "Data Source=local_database.db;Version=3;";
+    int postId = rnd.Next(0, 1000000000);
+
+    using (SQLiteConnection connection = new SQLiteConnection(connectionString))
+    {
+        connection.Open();
+
+        string insertQuery = "INSERT INTO Posts (UserId, Content, PostId) VALUES (@UserId, @Content, @PostId)";
+        using (SQLiteCommand command = new SQLiteCommand(insertQuery, connection))
+        {
+            command.Parameters.AddWithValue("@UserId", userId);
+            command.Parameters.AddWithValue("@Content", content);
+            command.Parameters.AddWithValue("@PostId", postId);
+            command.ExecuteNonQuery();
+        }
+    }
+}
+
+
+
+
+
+
 }
 
 
