@@ -7,7 +7,7 @@ public class FileWriter
 {
 
 
-    public static UserInputTextHandler userInputTextHandler; 
+    public static UserInputTextHandler userInputTextHandler = new UserInputTextHandler(); 
     public void SetUpSQLDataBase()
     {
         string connectionString = "Data Source=local_database.db;Version=3;";
@@ -48,8 +48,9 @@ public class FileWriter
         }
  public static string DoesUsernameExist()
     {
+        string input;
         Console.WriteLine("What is Your User Name?");
-        string input = userInputTextHandler.CannotBeNull();
+        input = userInputTextHandler.CannotBeNull();
         
         string connectionString = "Data Source=local_database.db;Version=3;";
         using (SQLiteConnection connection = new SQLiteConnection(connectionString))
