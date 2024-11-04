@@ -15,6 +15,7 @@ public class AccountHandle
         Console.WriteLine("Please Enter Your Email.");
         inputEmail = userInputTextHandler.CannotBeNull();
         FileWriter.AddUser(inputName, inputEmail, inputPassword);
+        
         return inputName;
     }
     public void LogIntAcount()
