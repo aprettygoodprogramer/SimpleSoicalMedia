@@ -37,6 +37,7 @@ class Program
             attemptToLogIn();
 
         }
+        
     }
     
     public static void attemptToLogIn()
