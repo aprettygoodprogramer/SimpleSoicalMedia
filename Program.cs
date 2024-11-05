@@ -46,7 +46,7 @@ class Program
         }
         if (input == "C")
         {
-            
+            inputHandler.makePost();
         }
 
     }
