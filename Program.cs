@@ -44,7 +44,10 @@ class Program
         {
             
         }
-
+        if (input == "C")
+        {
+            
+        }
 
     }
     

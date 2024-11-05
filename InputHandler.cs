@@ -1,13 +1,13 @@
 using System;
 using System.Collections.Generic;
-using System.Reflection;
 
 public class UserInputTextHandler
 {
+    public static List<string> yesNO = new List<string> { "y", "n" };  
+
     public string caseSensitiveInput(List<string> possibleAnswers)
     {
         string input;
-
         while (true)
         {
             input = Console.ReadLine(); 
@@ -21,6 +21,7 @@ public class UserInputTextHandler
             Console.WriteLine("Please type: " + string.Join(" or ", possibleAnswers)); 
         } 
     }
+
     public string CannotBeNull()
     {
         string input;
@@ -35,5 +36,24 @@ public class UserInputTextHandler
 
         return input;
     }
-    
+
+    public void makePost()
+    {
+        Console.WriteLine("Please Enter The Post Content");
+        string input = CannotBeNull();
+
+        Console.WriteLine("This is What Your Post Will Look Like: " + input);
+        Console.WriteLine("Do you like what it looks like? Type 'y' or 'n'");
+
+        input = caseSensitiveInput(yesNO);
+
+        if (input == "y")
+        {
+            FileWriter.CreatePost(input); 
+        }
+        else
+        {
+            makePost();
+        }
+    }
 }

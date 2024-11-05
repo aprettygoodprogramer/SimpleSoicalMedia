@@ -161,8 +161,9 @@ public static void ListAllData()
         }
     }
     }
-    public static void CreatePost(int userId, string content)
+    public static void CreatePost(string content)
 {
+    int userId = 0;
     string connectionString = "Data Source=local_database.db;Version=3;";
     int postId = rnd.Next(0, 1000000000);
 
