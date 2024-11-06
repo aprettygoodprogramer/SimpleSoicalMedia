@@ -181,6 +181,28 @@ public static void ListAllData()
         }
     }
 }
+public static void LookAtPosts()
+{
+    string connectionString = "Data Source=local_database.db;Version=3;";
+     using (SQLiteConnection connection = new SQLiteConnection(connectionString))
+    {
+        connection.Open();
+
+        string selectQuery = "SELECT * FROM Posts";
+        using (SQLiteCommand command = new SQLiteCommand(selectQuery, connection))
+        {
+            using (SQLiteDataReader reader = command.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+
+                    Console.WriteLine(reader["Content"]); 
+                }
+            }
+        }
+    }
+
+}
 
 
 

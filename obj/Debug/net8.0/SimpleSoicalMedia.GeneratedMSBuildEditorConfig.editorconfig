@@ -8,6 +8,6 @@ build_property.PlatformNeutralAssembly =
 build_property.EnforceExtendedAnalyzerRules = 
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = SimpleSoicalMedia
-build_property.ProjectDir = C:\Users\evanj\Projects\SimpleSoicalMedia\
+build_property.ProjectDir = /home/evanjducas/C#Projects/SimpleSoicalMedia/
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 

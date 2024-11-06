@@ -45,9 +45,9 @@ public class UserInputTextHandler
         Console.WriteLine("This is What Your Post Will Look Like: " + input);
         Console.WriteLine("Do you like what it looks like? Type 'y' or 'n'");
 
-        input = caseSensitiveInput(yesNO);
+        string input2 = caseSensitiveInput(yesNO);
 
-        if (input == "y")
+        if (input2 == "y")
         {
             FileWriter.CreatePost(input); 
         }
