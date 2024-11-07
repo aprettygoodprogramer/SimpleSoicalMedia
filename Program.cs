@@ -38,15 +38,18 @@ class Program
             attemptToLogIn();
 
         }
-        Console.WriteLine("Would You Like to Create A post or Look at posts? Type C for create and L for look");
-        input = inputHandler.caseSensitiveInput(LookOrCreate); 
-        if (input == "L")
-        {   
-            FileWriter.LookAtPosts(); 
-        }
-        if (input == "C")
+        while(true)
         {
-            inputHandler.makePost();
+            Console.WriteLine("Would You Like to Create A post or Look at posts? Type C for create and L for look");
+            input = inputHandler.caseSensitiveInput(LookOrCreate); 
+            if (input == "L")
+            {   
+                FileWriter.LookAtPosts(); 
+            }
+            if (input == "C")
+            {
+                inputHandler.makePost();
+            }
         }
 
     }
