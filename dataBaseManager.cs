@@ -11,6 +11,7 @@ public class FileWriter
     public static int currentPostId;
     public static List<int> postIdList = new List<int>();
     public static List<string> yesNo = new List<string>() {"y", "n"};
+    public static List<string> LookCreate = new List<string>() {"l", "c"};
     public static int amtPost = 0;
 
     public static UserInputTextHandler userInputTextHandler = new UserInputTextHandler(); 
@@ -221,6 +222,7 @@ public static void LookAtPosts()
                 {
                     int postID = Convert.ToInt32(reader["PostId"]);
                     postIdList.Add(postID);
+                    Console.WriteLine(reader["Content"]);
                     Console.WriteLine("Press " + amtPost.ToString() + " To Go into that post if you would like too"); 
                     amtPost++;
                     
@@ -237,9 +239,27 @@ public static void LookAtPosts()
         {
             ThingsCanChoose.Add(i.ToString());
         }
-        Console.WriteLine("Which Post Would you like to comment under?");
+        Console.WriteLine("Which Post Would you like to look at?");
         input = userInputTextHandler.caseSensitiveInput(ThingsCanChoose);
-        CommentUnderPost(input);
+        Console.WriteLine("Would you like to look at comments, or write a comment? type l for look and c for create");
+        string input4 = userInputTextHandler.caseSensitiveInput(LookCreate);
+        if (input4 == "c")
+        {
+            CommentUnderPost(input);
+        }
+        else if (input4 == "l")
+        {
+                int selectedIndex;
+                if (!int.TryParse(input, out selectedIndex) || selectedIndex < 0 || selectedIndex >= postIdList.Count)
+                {
+
+                    return;
+                }
+
+                int postId = postIdList[selectedIndex];
+                FillInPost(postId);
+        }
+
     }
     else
     {
@@ -269,7 +289,7 @@ public static void CommentUnderPost(string input)
     int postId = postIdList[selectedIndex];
 
     Console.WriteLine("Please enter your comment:");
-    string commentContent = Console.ReadLine();
+    string commentContent = userInputTextHandler.CannotBeNull();
 
     // Placeholder
     int userId = 0; 
@@ -293,6 +313,67 @@ public static void CommentUnderPost(string input)
     Console.WriteLine("Comment added successfully!");
 }
 
+public static void FillInPost(int postId)
+{
+    string connectionString = "Data Source=local_database.db;Version=3;";
+    string postContent = string.Empty;
+    string postTimestamp = string.Empty;
+    List<string> comments = new List<string>();
+
+    using (SQLiteConnection connection = new SQLiteConnection(connectionString))
+    {
+        connection.Open();
+
+        string selectPostQuery = "SELECT Content, Timestamp FROM Posts WHERE PostId = @PostId";
+        using (SQLiteCommand command = new SQLiteCommand(selectPostQuery, connection))
+        {
+            command.Parameters.AddWithValue("@PostId", postId);
+            using (SQLiteDataReader reader = command.ExecuteReader())
+            {
+                if (reader.Read())
+                {
+                    postContent = reader["Content"].ToString();
+                    postTimestamp = reader["Timestamp"].ToString();
+                }
+                else
+                {
+                    Console.WriteLine("Post not found.");
+                    return;
+                }
+            }
+        }
+
+        string selectCommentsQuery = "SELECT Content FROM Comments WHERE PostId = @PostId";
+        using (SQLiteCommand command = new SQLiteCommand(selectCommentsQuery, connection))
+        {
+            command.Parameters.AddWithValue("@PostId", postId);
+            using (SQLiteDataReader reader = command.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+                    comments.Add(reader["Content"].ToString());
+                }
+            }
+        }
+    }
+
+    Console.WriteLine("Post Details:");
+    Console.WriteLine($"Content: {postContent}");
+    Console.WriteLine($"Timestamp: {postTimestamp}");
+    Console.WriteLine("\nComments:");
+
+    if (comments.Count > 0)
+    {
+        for (int i = 0; i < comments.Count; i++)
+        {
+            Console.WriteLine($"{i + 1}. {comments[i]}");
+        }
+    }
+    else
+    {
+        Console.WriteLine("No comments for this post.");
+    }
+}
 
 
 
