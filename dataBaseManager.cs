@@ -3,6 +3,7 @@ using System.IO;
 using System.Data.SQLite;
 using Microsoft.VisualBasic;
 using System.Configuration;
+using System.Data.Entity.Core.Common.EntitySql;
 
 public class FileWriter
 {
@@ -210,88 +211,95 @@ public static void LookAtPosts()
 {
     amtPost = 0;
     string connectionString = "Data Source=local_database.db;Version=3;";
-     using (SQLiteConnection connection = new SQLiteConnection(connectionString))
+    using (SQLiteConnection connection = new SQLiteConnection(connectionString))
     {
         connection.Open();
-       string selectQuery = "SELECT * FROM Posts";
+        string selectQuery = "SELECT * FROM Posts";
         using (SQLiteCommand command = new SQLiteCommand(selectQuery, connection))
         {
             using (SQLiteDataReader reader = command.ExecuteReader())
             {
-                while (reader.Read() || amtPost >= 10)
+                while (reader.Read())
                 {
+                    amtPost++;
                     int postID = Convert.ToInt32(reader["PostId"]);
                     postIdList.Add(postID);
                     Console.WriteLine(reader["Content"]);
-                    Console.WriteLine("Press " + amtPost.ToString() + " To Go into that post if you would like too"); 
-                    amtPost++;
+                    Console.WriteLine("Press " + amtPost.ToString() + " to go into that post if you would like to.");
                     
                 }
             }
         }
     }
-    Console.WriteLine("Would You like to go into a post? Type y for yes and n for no");
+
+    if (amtPost == 0)
+    {
+        Console.WriteLine("No posts available.");
+        return; 
+    }
+
+    Console.WriteLine("Would you like to go into a post? Type 'y' for yes and 'n' for no.");
     string input = userInputTextHandler.caseSensitiveInput(yesNo);
     if (input == "y")
     {
+        int NEWi;
         List<string> ThingsCanChoose = new List<string>();
-        for (int i = amtPost; i > 0; i--)
+        for (int i = 0; i < amtPost; i++)
         {
-            ThingsCanChoose.Add(i.ToString());
+            //Console.WriteLine("THings you can choose" + i+1);
+            NEWi = i;
+            NEWi++;
+            ThingsCanChoose.Add(NEWi.ToString());
         }
-        Console.WriteLine("Which Post Would you like to look at?");
+
+        Console.WriteLine("Which post would you like to look at?");
         input = userInputTextHandler.caseSensitiveInput(ThingsCanChoose);
-        Console.WriteLine("Would you like to look at comments, or write a comment? type l for look and c for create");
-        string input4 = userInputTextHandler.caseSensitiveInput(LookCreate);
-        if (input4 == "c")
+
+        if (int.TryParse(input, out int selectedIndex) &&
+            selectedIndex >= 0 && selectedIndex < postIdList.Count)
         {
-            CommentUnderPost(input);
+            int trueID = postIdList[selectedIndex];
+
+            Console.WriteLine("Would you like to look at comments, or write a comment? Type 'l' for look and 'c' for create.");
+            string input4 = userInputTextHandler.caseSensitiveInput(LookCreate);
+
+            if (input4 == "c")
+            {
+                CommentUnderPost(trueID);
+            }
+            else if (input4 == "l")
+            {
+                FillInPost(trueID);
+            }
         }
-        else if (input4 == "l")
+        else
         {
-                int selectedIndex;
-                if (!int.TryParse(input, out selectedIndex) || selectedIndex < 0 || selectedIndex >= postIdList.Count)
-                {
-
-                    return;
-                }
-
-                int postId = postIdList[selectedIndex];
-                FillInPost(postId);
+            Console.WriteLine("Invalid selection. Please try again.");
         }
-
     }
     else
     {
         Console.WriteLine("Would you like to make a post then?");
         input = userInputTextHandler.caseSensitiveInput(yesNo);
-        if (input ==  "y")
+        if (input == "y")
         {
-            userInputTextHandler.makePost();   
+            userInputTextHandler.makePost();
         }
         else
         {
-            Console.WriteLine("**well too bad :D**");
-            userInputTextHandler.makePost();   
+            Console.WriteLine("**Well, too bad :D**");
+            userInputTextHandler.makePost();
         }
     }
 }
-public static void CommentUnderPost(string input)
-{
-    // Parse the user input
-    int selectedIndex;
-    if (!int.TryParse(input, out selectedIndex) || selectedIndex < 0 || selectedIndex >= postIdList.Count)
-    {
-        Console.WriteLine("Invalid selection. Please try again.");
-        return;
-    }
 
-    int postId = postIdList[selectedIndex];
+public static void CommentUnderPost(int postID)
+{
+
 
     Console.WriteLine("Please enter your comment:");
     string commentContent = userInputTextHandler.CannotBeNull();
 
-    // Placeholder
     int userId = 0; 
 
     string connectionString = "Data Source=local_database.db;Version=3;";
@@ -302,7 +310,7 @@ public static void CommentUnderPost(string input)
         string insertQuery = "INSERT INTO Comments (PostId, UserId, Content) VALUES (@PostId, @UserId, @Content)";
         using (SQLiteCommand command = new SQLiteCommand(insertQuery, connection))
         {
-            command.Parameters.AddWithValue("@PostId", postId);
+            command.Parameters.AddWithValue("@PostId", postID);
             command.Parameters.AddWithValue("@UserId", userId);
             command.Parameters.AddWithValue("@Content", commentContent);
 
@@ -324,13 +332,15 @@ public static void FillInPost(int postId)
     {
         connection.Open();
 
+        // Retrieve post details
         string selectPostQuery = "SELECT Content, Timestamp FROM Posts WHERE PostId = @PostId";
         using (SQLiteCommand command = new SQLiteCommand(selectPostQuery, connection))
         {
             command.Parameters.AddWithValue("@PostId", postId);
+
             using (SQLiteDataReader reader = command.ExecuteReader())
             {
-                if (reader.Read())
+                if (reader.Read()) // Ensure there's a row to read
                 {
                     postContent = reader["Content"].ToString();
                     postTimestamp = reader["Timestamp"].ToString();
@@ -343,10 +353,12 @@ public static void FillInPost(int postId)
             }
         }
 
+        // Retrieve comments for the post
         string selectCommentsQuery = "SELECT Content FROM Comments WHERE PostId = @PostId";
         using (SQLiteCommand command = new SQLiteCommand(selectCommentsQuery, connection))
         {
             command.Parameters.AddWithValue("@PostId", postId);
+
             using (SQLiteDataReader reader = command.ExecuteReader())
             {
                 while (reader.Read())
@@ -357,6 +369,7 @@ public static void FillInPost(int postId)
         }
     }
 
+    // Display post and comments
     Console.WriteLine("Post Details:");
     Console.WriteLine($"Content: {postContent}");
     Console.WriteLine($"Timestamp: {postTimestamp}");
@@ -374,6 +387,7 @@ public static void FillInPost(int postId)
         Console.WriteLine("No comments for this post.");
     }
 }
+
 
 
 
