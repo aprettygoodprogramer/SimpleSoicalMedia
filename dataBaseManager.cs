@@ -210,6 +210,7 @@ public static void ListAllData()
 public static void LookAtPosts()
 {
     amtPost = 0;
+    int pressAmtPost;
     string connectionString = "Data Source=local_database.db;Version=3;";
     using (SQLiteConnection connection = new SQLiteConnection(connectionString))
     {
@@ -225,7 +226,8 @@ public static void LookAtPosts()
                     int postID = Convert.ToInt32(reader["PostId"]);
                     postIdList.Add(postID);
                     Console.WriteLine(reader["Content"]);
-                    Console.WriteLine("Press " + amtPost.ToString() + " to go into that post if you would like to.");
+                    pressAmtPost = amtPost-1; 
+                    Console.WriteLine("Press " + pressAmtPost.ToString() + " to go into that post if you would like to.");
                     
                 }
             }
@@ -248,7 +250,7 @@ public static void LookAtPosts()
         {
             //Console.WriteLine("THings you can choose" + i+1);
             NEWi = i;
-            NEWi++;
+            //NEWi++;
             ThingsCanChoose.Add(NEWi.ToString());
         }
 
